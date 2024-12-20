@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Seed Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px; /* Increased max-width for the container */
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%; /* Ensure the table takes the full width of the container */
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #5cb85c;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .back-button, .action-button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            width: 100%; /* Full width for buttons */
+        }
+        .back-button:hover, .action-button:hover {
+            background-color: #4cae4c;
+        }
+        .feedback-form {
+            margin-top: 10px;
+        }
+        @media (max-width: 768px) {
+            /* Responsive adjustments for smaller screens */
+            th, td {
+                font-size: 14px; /* Smaller font size on mobile */
+                padding: 10px; /* Adjust padding */
+            }
+            .back-button, .action-button {
+                padding: 8px; /* Smaller button padding */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Work on Requests</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Request Date</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in seed_requests %}
+            <tr>
+                <td>{{ request.request_date }}</td>
+                <td>{{ request.description }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    {% if request.status == 'Pending' %}
+                    <form action="{% url 'approve_request' request.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="action-button">Approve</button>
+                    </form>
+                    <form action="{% url 'reject_request' request.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="action-button">Reject</button>
+                    </form>
+                    {% else %}
+                    <span>{{ request.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{% url 'add_feedback' request.id %}" method="POST" class="feedback-form" style="display: flex; align-items: center; margin-top: 10px;">
+                        {% csrf_token %}
+                        <input type="text" name="feedback" placeholder="Add feedback..." required
+                               style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-right: 10px;">
+                        <button type="submit" class="action-button"
+                                style="background-color: #5cb85c; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">
+                            Submit
+                        </button>
+                    </form>
+                    {% if request.feedback %}
+                    <p><strong>Feedback:</strong> {{ request.feedback }}</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No seed requests found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="back-button" onclick="window.history.back();">Back</button>
+</div>
+
+</body>
+</html>

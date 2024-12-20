@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+    <title>Farmer Management</title>
+</head>
+<body>
+
+    <section id="content">
+        <nav>
+            <h1>Farmer Management</h1>
+        </nav>
+
+        <main>
+            <div class="data-table">
+                <h2>Farmers List</h2>
+                <table class="table table-striped text-white">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Contact</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for farmer in farmers %}
+                        <tr>
+                            <td>{{ farmer.firstname }}</td>
+                            <td>{{ farmer.lastname }}</td>
+                            <td>{{ farmer.contact }}</td>
+                            <td>
+                                <a href="{% url 'edit_farmer' farmer.id %}" class="btn-edit">
+                                    <i class='bx bxs-edit'></i> Edit
+                                </a>
+                                <form action="{% url 'delete_farmer' farmer.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-delete">
+                                        <i class='bx bxs-trash'></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No farmers found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</body>
+</html>

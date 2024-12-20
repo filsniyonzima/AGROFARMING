@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+    <title>Settings</title>
+</head>
+<body>
+
+    <section id="content">
+        <nav>
+            <h1>Settings</h1>
+        </nav>
+
+        <main>
+            <div class="settings-container">
+                <h2>User Profile</h2>
+                <form method="post" id="profile-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" readonly>
+                    </div>
+                    <button type="submit" class="btn-submit">Update Profile</button>
+                </form>
+
+                <h2>Change Password</h2>
+                <form method="post" id="password-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="old_password">Old Password:</label>
+                        <input type="password" name="old_password" id="old_password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">New Password:</label>
+                        <input type="password" name="new_password" id="new_password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm New Password:</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Change Password</button>
+                </form>
+
+                <h2>Other Settings</h2>
+                <form method="post" id="other-settings-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="notifications">Email Notifications:</label>
+                        <select name="notifications" id="notifications" class="form-control">
+                            <option value="1" {% if user.profile.notifications %}selected{% endif %}>Enabled</option>
+                            <option value="0" {% if not user.profile.notifications %}selected{% endif %}>Disabled</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">Save Settings</button>
+                </form>
+            </div>
+        </main>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</body>
+</html>

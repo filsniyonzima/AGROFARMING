@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black;
+        }
+        .card {
+            background-color: #000000;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+        .card-header {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        .card-body {
+            background-color: #000000;
+        }
+        h1, h5 {
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #4db6e1;
+            border-color: #4db6e1;
+        }
+        .btn-primary:hover {
+            background-color: #008C9E;
+            border-color: #00796b;
+        }
+        .form-control {
+            background-color: #000000;
+            border: 1px solid #4db6e1;
+            color: #ffffff;
+        }
+        .form-control:focus {
+            background-color: #111111;
+            border-color: #00796b;
+            color: #ffffff;
+        }
+        label {
+            color: #ffffff;
+        }
+        .input-group-text {
+            background-color: #000000;
+            border: 1px solid #4db6e1;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Stock Management</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Add New Stock</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'stock_management' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="seed">Seed Name</label>
+                        <input type="text" class="form-control" id="seed" name="seed" placeholder="Enter Seed Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fertilizer">Fertilizer Name</label>
+                        <input type="text" class="form-control" id="fertilizer" name="fertilizer" placeholder="Enter Fertilizer Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="seedquantity">Seed Quantity</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="seedquantity" name="seedquantity" placeholder="Enter Seed Quantity">
+                            <div class="input-group-append">
+                                <span class="input-group-text">/kg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fertilizerquantity">Fertilizer Quantity</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="fertilizerquantity" name="fertilizerquantity" placeholder="Enter Fertilizer Quantity">
+                            <div class="input-group-append">
+                                <span class="input-group-text">/kg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planting_season">Planting Season</label>
+                        <input type="text" class="form-control" id="planting_season" name="planting_season" placeholder="Enter Planting Season">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Stock</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Current Stock</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped text-white">
+                    <thead>
+                        <tr>
+                            <th>Seed</th>
+                            <th>Fertilizer</th>
+                            <th>Seed Quantity</th>
+                            <th>Fertilizer Quantity</th>
+                            <th>Planting Season</th>
+                            <th>Actions</th> <!-- New Actions Column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock in stocks %}
+                        <tr>
+                            <td>{{ stock.seed }}</td>
+                            <td>{{ stock.fertilizer }}</td>
+                            <td>{{ stock.seedquantity }} /kg</td>
+                            <td>{{ stock.fertilizerquantity }} /kg</td>
+                            <td>{{ stock.planting_season }}</td>
+                            <td>
+                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="#" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">No stock records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

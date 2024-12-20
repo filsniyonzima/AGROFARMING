@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+    <title>About Us</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+            color: #343a40; /* Dark text color */
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            color: #007bff; /* Primary color for headings */
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .mission, .vision, .values {
+            margin: 20px 0;
+        }
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .team-member {
+            margin: 10px;
+            text-align: center;
+        }
+        .team-member img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+        .btn-contact {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff; /* Button color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="about-us">
+        <div class="container">
+            <h1>About Us</h1>
+            <div class="mission">
+                <h2>Our Mission</h2>
+                <p>At [AGROFARMING], our mission is to empower farmers through innovative solutions, sustainable practices, and community support. We strive to enhance agricultural productivity while preserving the environment for future generations.</p>
+            </div>
+            <div class="vision">
+                <h2>Our Vision</h2>
+                <p>We envision a world where every farmer has access to the resources and knowledge they need to thrive, leading to a prosperous agricultural community and a sustainable future.</p>
+            </div>
+            <div class="values">
+                <h2>Our Values</h2>
+                <ul>
+                    <li>Integrity: We act with honesty and uphold the highest standards of moral and ethical values.</li>
+                    <li>Innovation: We embrace change and continually seek new ways to improve and adapt.</li>
+                    <li>Collaboration: We believe in teamwork and the power of working together to achieve common goals.</li>
+                    <li>Sustainability: We are committed to practices that protect our planet and promote long-term agricultural health.</li>
+                </ul>
+            </div>
+            <div class="team">
+                <h2>Meet Our Team</h2>
+                <div class="team-member">
+                    <img src="{% static 'images/team_member1.jpg' %}" alt="Team Member 1">
+                    <h3>lazio</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="team-member">
+                    <img src="{% static 'images/team_member2.jpg' %}" alt="Team Member 2">
+                    <h3>Kami</h3>
+                    <p>Chief Operating Officer</p>
+                </div>
+                <!-- Add more team members as needed -->
+            </div>
+            <a href="#" class="btn-contact">Contact Us</a>
+        </div>
+    </section>
+
+</body>
+</html>
